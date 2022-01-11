@@ -9,5 +9,9 @@
          margin-left: 20px;
          text-transform: uppercase;
       }
+      & div {
+         display: inline-block;
+         cursor: pointer;
+      }
    }
 }
