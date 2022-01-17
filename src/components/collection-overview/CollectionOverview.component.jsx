@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 const CollectionOverview = ({ collections }) => {
    return (
       <div className='collections'>
-         {collections.map(({ id, title, items }) => <CollectionPreview key={id} title={title} items={items} />)}
+         {collections.map(({ id, title, items, routeName }) => <CollectionPreview key={id} routeName={routeName} title={title} items={items} />)}
       </div>
    )
 }

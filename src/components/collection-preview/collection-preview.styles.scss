@@ -1,9 +1,15 @@
-.collection {
-   display: flex;
-   justify-content: space-evenly;
-   gap: 10px;
-   margin-bottom: 20px;
-}
-.title {
-   margin-bottom: 10px;
+.collection-preview {
+   & .collection {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+   }
+   & .title {
+      margin-bottom: 10px;
+   }
+   & .see-more-button {
+      display: block;
+      margin-left: auto;
+   }
 }

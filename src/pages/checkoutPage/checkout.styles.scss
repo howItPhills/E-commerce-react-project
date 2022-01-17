@@ -23,9 +23,20 @@
     }
   }
 
-  .total {
-    margin-top: 30px;
+  & .checkout-warning {
+    font-size: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: red;
+  }
+
+  button {
     margin-left: auto;
+  }
+  .total {
+    margin: 30px 0px 20px auto;
+    // margin-top: 30px;
+    // margin-left: auto;
     font-size: 36px;
   }
 }
