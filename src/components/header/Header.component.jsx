@@ -9,24 +9,25 @@ import CartDropdown from '../cart-dropdown/CartDropdown.components';
 import { createStructuredSelector } from 'reselect';
 import { selectCartHidden } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { HeaderContainer, OptionContainer, OptionsContainer } from './Header.styles';
 
 const Header = ({ currentUser, hidden }) => (
-   <div className="header">
-      <Link to='/'><Logo className='logo' /></Link>
-      <div className="options">
-         <Link to='/shop' className='option'>shop</Link>
-         <Link to='/contact' className='option'>contact</Link>
+   <HeaderContainer>
+      <Link to='/'><Logo /></Link>
+      <OptionsContainer>
+         <OptionContainer to='/shop'>shop</OptionContainer>
+         <OptionContainer to='/contact' >contact</OptionContainer>
          {
             currentUser ?
-               <div onClick={() => auth.signOut()} className='sign-out option'>sign out</div> :
-               <Link to='/signin' className='option'>sign in</Link>
+               <OptionContainer as='div' onClick={() => auth.signOut()}>sign out</OptionContainer> :
+               <OptionContainer to='/signin'>sign in</OptionContainer>
          }
          <CartIcon className='option' />
-      </div>
+      </OptionsContainer>
       {
          hidden ? null : <CartDropdown />
       }
-   </div>
+   </HeaderContainer>
 )
 
 const mapStateToProps = createStructuredSelector({

@@ -17,7 +17,7 @@ firebase.initializeApp(config);
 export const createUserProfileDocument = async (userAuth, additionalData) => {
    if (!userAuth) return;
 
-   //reference object can be changed by CRUD, snapshot objects - dont (only for checking existance of ref object in data-base)
+   //reference object can be changed by CRUD, snapshot objects - dont (only for checking existance of ref object in data-base and getting data (snapshot.data()))
    const userRef = firestore.doc(`users/${userAuth.uid}`) //documentRef - object, used for CRUD - operations (get, set, delete, update)
 
    const snapShot = await userRef.get() // documentSnapshot - object, used only to display information about ref object (mostly for checking existance in data-base) 
@@ -38,6 +38,35 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
    return userRef;
 }
+
+
+export const addNewCollectionAndDocument = async (collectionKey, objectsToAdd) => {
+   const collectionRef = firestore.collection(collectionKey)
+   const batch = firestore.batch()
+
+   objectsToAdd.forEach(obj => {
+      const newDocRef = collectionRef.doc()
+      batch.set(newDocRef, obj)
+   })
+   await batch.commit()
+}
+
+export const convertCollectionsSnapshotToMap = (collections) => {
+   const transformedCollection = collections.docs.map(doc => {
+      const { title, items } = doc.data()
+      return {
+         routeName: encodeURI(title.toLowerCase()),
+         id: doc.id,
+         title,
+         items
+      }
+   })
+   return transformedCollection.reduce((accumulator, collection) => {
+      accumulator[collection.title.toLowerCase()] = collection
+      return accumulator
+   }, {})
+}
+
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

@@ -23,7 +23,7 @@ class App extends React.Component {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth); //getting userRef from createUserProfileDocument's return
-        userRef.onSnapshot(snapShot => { //onSnapShot() = refObj.get() - getting snapshotObject (for info)
+        userRef.onSnapshot(snapShot => { //onSnapShot checks if snapShot object changes (if does - setCurrentUser gets called based on new snapShot data)
           setCurrentUser({
             id: snapShot.id,
             ...snapShot.data(), // spreading the rest of data (email, displayName, etc.) 
@@ -56,7 +56,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 })
 
 const mapDispatchToProps = dispatch => ({

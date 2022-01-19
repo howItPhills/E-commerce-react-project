@@ -9,7 +9,7 @@ export const selectShopPageCollections = createSelector(
 
 export const selectShopPageCollectionsArray = createSelector(
    [selectShopPageCollections],
-   collections => Object.keys(collections).map(key => collections[key])
+   collections => collections ? Object.keys(collections).map(key => collections[key]) : []
 )
 
 // const MAP_STRING_TO_NUMBER = { //this object helps to convert collectionId from (match.params.collectionId) from string to number 
@@ -32,5 +32,5 @@ export const selectShopPageCollectionsArray = createSelector(
 
 export const selectCollection = collectionId => createSelector(
    [selectShopPageCollections],
-   collections => collections[collectionId] // DATA NORMALIZATION : we converted collections from array to object for easier search for the item we need (by collectionId, which is a string value from URL) instead of iterating through whole array using find method (low perfrmance with large arrays)
+   collections => collections ? collections[collectionId] : null // DATA NORMALIZATION : we converted collections from array to object for easier search for the item we need (by collectionId, which is a string value from URL) instead of iterating through whole array using find method (low perfrmance with large arrays)
 )

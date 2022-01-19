@@ -1,8 +1,8 @@
 .collection-preview {
+   margin-bottom: 20px;
    & .collection {
       display: flex;
-      justify-content: center;
-      gap: 10px;
+      justify-content: space-between;
       margin-bottom: 20px;
    }
    & .title {
