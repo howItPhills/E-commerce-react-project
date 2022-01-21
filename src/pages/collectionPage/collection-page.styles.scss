@@ -6,11 +6,12 @@
       margin-bottom: 25px;
       text-transform: uppercase;
       color: #4a4a4a;
+      text-align: center;
    }
    & .collection-page-items {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      justify-content: space-between;
+      justify-content: center;
    }
 }
