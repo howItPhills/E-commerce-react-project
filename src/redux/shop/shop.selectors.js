@@ -21,7 +21,7 @@ export const selectIsFetching = createSelector(
    [selectShopPage],
    shop => shop.isFetching
 )
-export const selectIsCollections = createSelector(
+export const selectIsCollectionsFetching = createSelector(
    [selectShopPageCollections],
    collections => !!collections
 )
