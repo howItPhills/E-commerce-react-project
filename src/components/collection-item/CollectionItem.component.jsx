@@ -3,8 +3,12 @@ import './collection-item.styles.scss'
 import CustomButton from '../custom-button/CustomButton.component'
 import { connect } from 'react-redux'
 import { addItem } from '../../redux/cart/cart.actions'
+import { compose } from 'redux'
+import { withRouter } from 'react-router-dom'
+import { createStructuredSelector } from 'reselect'
+import { selectCurrentUser } from '../../redux/user/user.selectors'
 
-const CollectionItem = ({ item, addItem }) => {
+const CollectionItem = ({ item, addItem, history, currentUser, ...otherProps }) => {
    const { imageUrl, name, price } = item
    return (
       <div className='collection-item' >
@@ -17,14 +21,24 @@ const CollectionItem = ({ item, addItem }) => {
             <span className="item-name">{name}</span>
             <span className="item-price">${price}</span>
          </div>
-         <CustomButton isInverted onClick={() => addItem(item)}>add to cart</CustomButton>
+         <CustomButton isInverted
+            onClick={() => currentUser ? addItem(item) : history.push('/signin')}
+         >add to cart</CustomButton>
       </div >
    )
 }
 
 
+const mapStateToProps = createStructuredSelector({
+   currentUser: selectCurrentUser
+})
+
 const mapDispatchToProps = dispatch => ({
    addItem: item => dispatch(addItem(item))
 })
 
-export default connect(null, mapDispatchToProps)(CollectionItem)
+
+export default compose(
+   connect(mapStateToProps, mapDispatchToProps),
+   withRouter,
+)(CollectionItem)

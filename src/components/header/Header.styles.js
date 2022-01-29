@@ -14,7 +14,9 @@ export const OptionsContainer = styled.div`
    align-items: center;
 `
 export const OptionContainer = styled(Link)`
-   margin-left: 20px;
+   margin-left: 30px;
    text-transform: uppercase;
+   font-size: 20px;
+   color: #4a4a4a;
    ${({ as }) => as === 'div' && 'cursor: pointer'}
 `

@@ -1,6 +1,6 @@
 import { takeLatest, put, call, all } from "redux-saga/effects";
 import { auth, createUserProfileDocument, getCurrentUser, googleProvider } from "../../firebase/firebase.utils";
-import { signInFailure, signInSuccess, signOutFailure, signOutSuccess, signUpFailure } from "./user.actions";
+import { signInFailure, signInSuccess, signOutFailure, signOutSuccess, signUpFailure, signUpSuccess } from "./user.actions";
 import { userActionTypes } from "./user.types";
 
 
@@ -54,13 +54,18 @@ function* onUserSignOut() {
       yield put(signOutFailure(error.message))
    }
 }
+
 function* onUserSignUp({ payload: { displayName, email, password } }) {
    try {
       const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-      yield onGettingUserSnapshot(user, { displayName })
+      yield put(signUpSuccess({ user, displayName }))
    } catch (error) {
       yield put(signUpFailure(error.message))
    }
+}
+
+function* signInAfterSignUp({ payload: { user, displayName } }) {
+   yield onGettingUserSnapshot(user, { displayName })
 }
 
 // SAGAS-LISTENERS
@@ -80,7 +85,9 @@ function* onUserSignOutStart() {
 function* onUserSignUpStart() {
    yield takeLatest(userActionTypes.SIGN_UP_START, onUserSignUp)
 }
-
+function* onUserSignUpSuccess() {
+   yield takeLatest(userActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp)
+}
 
 
 // COMBINER
@@ -91,5 +98,6 @@ export function* userSagas() {
       call(onUserAuthCheck),
       call(onUserSignOutStart),
       call(onUserSignUpStart),
+      call(onUserSignUpSuccess),
    ])
 }
