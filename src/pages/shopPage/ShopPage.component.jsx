@@ -1,22 +1,17 @@
 import React from 'react'
 
-import CollectionsOverview from '../../components/collection-overview/CollectionsOverview.component'
 import { Route } from 'react-router-dom'
-import CollectionPage from '../collectionPage/CollectionPage.component'
-import { convertCollectionsSnapshotToMap, firestore } from '../../firebase/firebase.utils'
 import { connect } from 'react-redux';
-import { collectionsFetchingAsync, updateCollections } from '../../redux/shop/shop.actions'
-import { withSpinner } from '../../components/with-spinner/withSpinner.HOC'
 import CollectionPageContainer from '../collectionPage/CollectionPageContainer.component'
 import CollectionsOverviewContainer from '../../components/collection-overview/CollectionsOverviewContainer.component'
+import { collectionsFetchingStart } from '../../redux/shop/shop.actions';
 
 
 class ShopPage extends React.Component {
    componentDidMount() {
-      const { collectionsFetchingAsync } = this.props
-      collectionsFetchingAsync()
+      const { collectionsFetchingStart } = this.props;
+      collectionsFetchingStart();
    }
-
 
    render() {
       const { match } = this.props;
@@ -30,8 +25,10 @@ class ShopPage extends React.Component {
 }
 
 
-const mapDispatchToProps = (dispatch) => ({
-   collectionsFetchingAsync: () => dispatch(collectionsFetchingAsync())
-})
+const mapDispatchToProps = (dispatch) => {
+   return {
+      collectionsFetchingStart: () => dispatch(collectionsFetchingStart())
+   }
+}
 
 export default connect(null, mapDispatchToProps)(ShopPage)

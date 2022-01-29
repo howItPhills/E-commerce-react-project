@@ -28,6 +28,11 @@ export const cartReducer = (state = INITIAL_STATE, action) => {
             ...state,
             cartItems: state.cartItems.filter(cartItem => cartItem.id !== action.payload.id)
          }
+      case cartTypes.CLEAR_CART_ON_SIGN_OUT:
+         return {
+            ...state,
+            cartItems: []
+         }
       default:
          return state
    }

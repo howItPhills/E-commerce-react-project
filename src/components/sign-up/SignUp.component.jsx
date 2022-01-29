@@ -6,9 +6,11 @@ import FormInput from '../form-input/FormInput.component';
 
 import { auth } from '../../firebase/firebase.utils';
 import { createUserProfileDocument } from '../../firebase/firebase.utils';
+import { connect } from 'react-redux';
+import { signUpStart } from '../../redux/user/user.actions';
 
 
-export default class SignUp extends Component {
+class SignUp extends Component {
    constructor(props) {
       super(props)
 
@@ -31,24 +33,19 @@ export default class SignUp extends Component {
    handleSubmit = async event => {
       event.preventDefault();
 
-      const { displayName, email, password, confirmPassword } = this.state
-
+      const { displayName, email, password, confirmPassword } = this.state;
+      const { signUpStart } = this.props;
       if (password !== confirmPassword) {
          alert('Passwords dont match');
          return;
       }
-      try {
-         const { user } = await auth.createUserWithEmailAndPassword(email, password)
-         await createUserProfileDocument(user, { displayName });
-         this.setState({
-            displayName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-         })
-      } catch (error) {
-         console.log('Failed registry', error.message)
-      }
+      signUpStart(displayName, email, password)
+      this.setState({
+         displayName: '',
+         email: '',
+         password: '',
+         confirmPassword: '',
+      })
    }
 
    render() {
@@ -96,3 +93,9 @@ export default class SignUp extends Component {
       )
    }
 }
+
+const mapDispatchToProps = dispatch => ({
+   signUpStart: (displayName, email, password) => dispatch(signUpStart({ displayName, email, password }))
+})
+
+export default connect(null, mapDispatchToProps)(SignUp)
