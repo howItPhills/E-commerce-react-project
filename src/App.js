@@ -4,7 +4,6 @@ import Homepage from './pages/homepage/Homepage.component';
 import { Route, Switch, Redirect } from 'react-router-dom'
 import ShopPage from './pages/shopPage/ShopPage.component';
 import Header from './components/header/Header.component';
-import SignInPage from './pages/signInPage/SignInPage.component';
 import ContactPage from './pages/contactPage/ContactPage.component';
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect';

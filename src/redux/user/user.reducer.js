@@ -2,7 +2,8 @@ import { userActionTypes } from './user.types'
 
 const INITIAL_STATE = {
    currentUser: null,
-   errorMessage: ''
+   errorMessage: '',
+   isInvalidEmailOrPassword: false,
 }
 
 
@@ -13,12 +14,18 @@ const userReducer = (state = INITIAL_STATE, action) => {
             ...state,
             currentUser: action.payload,
             errorMessage: '',
+            isInvalidEmailOrPassword: false
          };
-      case userActionTypes.SIGN_IN_FAILURE:
       case userActionTypes.SIGN_OUT_FAILURE:
       case userActionTypes.SIGN_UP_FAILURE:
          return {
             ...state,
+            errorMessage: action.payload
+         }
+      case userActionTypes.SIGN_IN_FAILURE:
+         return {
+            ...state,
+            isInvalidEmailOrPassword: true,
             errorMessage: action.payload
          }
       case userActionTypes.SIGN_OUT_SUCCESS:

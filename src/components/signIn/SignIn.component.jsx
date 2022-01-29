@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import CustomButton from '../custom-button/CustomButton.component';
 import FormInput from '../form-input/FormInput.component';
 import './sign-in.styles.scss';
-// import { signInWithGoogle } from '../../firebase/firebase.utils'
-// import { auth } from '../../firebase/firebase.utils';
 import { emailSignInStart, googleSignInStart } from '../../redux/user/user.actions';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectErrorMessage, selectIsInvalid } from '../../redux/user/user.selectors';
 
 class SignIn extends Component {
    constructor(props) {
@@ -36,7 +36,7 @@ class SignIn extends Component {
    }
 
    render() {
-      const { googleSignInStart } = this.props;
+      const { googleSignInStart, isInvalidEmailOrPassword } = this.props;
       return (
          <div className='sign-in'>
             <h2 className='title'>Already have an account?</h2>
@@ -46,6 +46,9 @@ class SignIn extends Component {
                   label='Email' onChange={this.handleChange} />
                <FormInput label='Password' type="password" name='password' required value={this.state.password} onChange={this.handleChange} />
                <div className='buttons'>
+                  {
+                     isInvalidEmailOrPassword ? <div className='sign-in-error'>Invalid Email or Password</div> : null
+                  }
                   <CustomButton type="submit">
                      Sign in
                   </CustomButton>
@@ -59,9 +62,13 @@ class SignIn extends Component {
    }
 }
 
+const mapStateToProps = createStructuredSelector({
+   isInvalidEmailOrPassword: selectIsInvalid,
+})
+
 const mapDispatchToProps = dispatch => ({
    googleSignInStart: () => dispatch(googleSignInStart()),
    emailSignInStart: (email, password) => dispatch(emailSignInStart({ email, password }))
 })
 
-export default connect(null, mapDispatchToProps)(SignIn)
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

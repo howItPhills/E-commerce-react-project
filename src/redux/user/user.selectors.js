@@ -7,3 +7,8 @@ export const selectCurrentUser = createSelector(
    user => user.currentUser
 )
 
+export const selectIsInvalid = createSelector(
+   [selectUser],
+   user => user.isInvalidEmailOrPassword,
+)
+
