@@ -1,12 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectShopPageCollectionsArray } from '../../redux/shop/shop.selectors'
 import CollectionPreview from '../collection-preview/CollectionPreview.component'
+import { withSpinner } from '../with-spinner/withSpinner.HOC'
 import './collection-overview.styles.scss'
 
-import { selectShopPageCollectionsArray } from '../../redux/shop/shop.selectors';
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
 
-const CollectionsOverview = ({ collections }) => {
+const CollectionsOverview = () => {
+   const collections = useSelector(selectShopPageCollectionsArray)
+
    return (
       <div className='collections'>
          {collections.map(({ id, title, items, routeName }) => <CollectionPreview key={id} routeName={routeName} title={title} items={items} />)}
@@ -14,8 +16,4 @@ const CollectionsOverview = ({ collections }) => {
    )
 }
 
-const mapStateToProps = createStructuredSelector({
-   collections: selectShopPageCollectionsArray,
-})
-
-export default connect(mapStateToProps)(CollectionsOverview)
+export default withSpinner(CollectionsOverview)

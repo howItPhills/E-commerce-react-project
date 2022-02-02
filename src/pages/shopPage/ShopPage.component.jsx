@@ -1,34 +1,21 @@
-import React from 'react'
+import React, { useEffect, useLayoutEffect } from 'react';
 
-import { Route } from 'react-router-dom'
-import { connect } from 'react-redux';
-import CollectionPageContainer from '../collectionPage/CollectionPageContainer.component'
-import CollectionsOverviewContainer from '../../components/collection-overview/CollectionsOverviewContainer.component'
+import { Outlet } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { collectionsFetchingStart } from '../../redux/shop/shop.actions';
 
 
-class ShopPage extends React.Component {
-   componentDidMount() {
-      const { collectionsFetchingStart } = this.props;
-      collectionsFetchingStart();
-   }
+const ShopPage = () => {
+   const dispatch = useDispatch();
+   useLayoutEffect(() => {
+      dispatch(collectionsFetchingStart())
+   })
 
-   render() {
-      const { match } = this.props;
-      return (
-         <div className='shop-page'>
-            <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
-            <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
-         </div>
-      )
-   }
+   return (
+      <div className='shop-page'>
+         <Outlet />
+      </div>
+   )
 }
 
-
-const mapDispatchToProps = (dispatch) => {
-   return {
-      collectionsFetchingStart: () => dispatch(collectionsFetchingStart())
-   }
-}
-
-export default connect(null, mapDispatchToProps)(ShopPage)
+export default ShopPage

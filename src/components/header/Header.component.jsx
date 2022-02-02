@@ -12,7 +12,7 @@ import { HeaderContainer, OptionContainer, OptionsContainer } from './Header.sty
 import CartIconContainer from '../cart-icon/CartIconContainer.component';
 import { signOutStart } from '../../redux/user/user.actions';
 
-const Header = ({ currentUser, hidden, signOutStart }) => (
+const Header = ({ currentUser, isHidden, signOutStart }) => (
    <HeaderContainer>
       <Link to='/'><Logo /></Link>
       <OptionsContainer>
@@ -26,14 +26,14 @@ const Header = ({ currentUser, hidden, signOutStart }) => (
          <CartIconContainer className='option' />
       </OptionsContainer>
       {
-         hidden ? null : <CartDropdown />
+         isHidden ? null : <CartDropdown />
       }
    </HeaderContainer>
 )
 
 const mapStateToProps = createStructuredSelector({
    currentUser: selectCurrentUser,
-   hidden: selectCartHidden,
+   isHidden: selectCartHidden,
 })
 
 const mapDispatchToProps = dispatch => ({

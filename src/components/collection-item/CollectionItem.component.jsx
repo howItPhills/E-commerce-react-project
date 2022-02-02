@@ -4,12 +4,13 @@ import CustomButton from '../custom-button/CustomButton.component'
 import { connect } from 'react-redux'
 import { addItem } from '../../redux/cart/cart.actions'
 import { compose } from 'redux'
-import { withRouter } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { selectCurrentUser } from '../../redux/user/user.selectors'
 
 const CollectionItem = ({ item, addItem, history, currentUser, ...otherProps }) => {
    const { imageUrl, name, price } = item
+   const navigate = useNavigate();
    return (
       <div className='collection-item' >
          <div
@@ -22,7 +23,7 @@ const CollectionItem = ({ item, addItem, history, currentUser, ...otherProps }) 
             <span className="item-price">${price}</span>
          </div>
          <CustomButton isInverted
-            onClick={() => currentUser ? addItem(item) : history.push('/signin')}
+            onClick={() => currentUser ? addItem(item) : navigate('/signin')}
          >add to cart</CustomButton>
       </div >
    )
@@ -40,5 +41,4 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
    connect(mapStateToProps, mapDispatchToProps),
-   withRouter,
 )(CollectionItem)

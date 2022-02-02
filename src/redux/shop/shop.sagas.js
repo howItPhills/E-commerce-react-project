@@ -13,7 +13,7 @@ import { shopActionTypes } from './shop.types';
 // MAIN SAGAS
 function* fetchCollectionsAsync() {
    try {
-      const collectionRef = firestore.collection('collections');
+      const collectionRef = yield firestore.collection('collections');
       const snapshot = yield collectionRef.get()
       const collections = yield call(convertCollectionsSnapshotToMap, snapshot)
       yield put(collectionsFetchingSuccessful(collections))

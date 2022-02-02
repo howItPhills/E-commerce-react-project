@@ -1,7 +1,15 @@
 import { SpinnerOverlay, SpinnerContainer } from './with-spinner.styles'
+import { connect } from 'react-redux';
+import { selectIsFetching } from '../../redux/shop/shop.selectors';
+import { createStructuredSelector } from 'reselect';
+
+const mapStateToProps = createStructuredSelector({
+   isLoading: selectIsFetching
+})
 
 
 export const withSpinner = ComponentToWrap => {
+
    const Spinner = ({ isLoading, ...otherProps }) => {
       return isLoading ?
          <SpinnerOverlay>
@@ -9,5 +17,5 @@ export const withSpinner = ComponentToWrap => {
          </SpinnerOverlay> :
          <ComponentToWrap {...otherProps} />
    }
-   return Spinner
+   return connect(mapStateToProps)(Spinner)
 }

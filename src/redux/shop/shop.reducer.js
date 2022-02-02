@@ -18,12 +18,8 @@ export const shopReducer = (state = INITIAL_STATE, action) => {
             ...state,
             isFetching: true,
          }
-      case userActionTypes.SIGN_IN_FAILURE:
-         return {
-            ...state,
-            isFetching: false,
-         }
       case userActionTypes.SIGN_IN_SUCCESS:
+      case userActionTypes.SIGN_IN_FAILURE:
          return {
             ...state,
             isFetching: false
@@ -39,6 +35,7 @@ export const shopReducer = (state = INITIAL_STATE, action) => {
             ...state,
             errorMessage: action.payload
          }
+
       default:
          return state
    }

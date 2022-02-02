@@ -4,9 +4,11 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 import { withSpinner } from "../../components/with-spinner/withSpinner.HOC"
 import CollectionsOverview from "./CollectionsOverview.component"
+import { selectShopPageCollectionsArray } from './../../redux/shop/shop.selectors'
+
 
 const mapStateToProps = createStructuredSelector({
-   isLoading: selectIsFetching,
+   collections: selectShopPageCollectionsArray,
 })
 
 const CollectionsOverviewContainer = compose(

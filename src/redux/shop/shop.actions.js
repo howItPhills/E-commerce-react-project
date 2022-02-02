@@ -14,6 +14,7 @@ export const collectionsFetchingFailure = (errorMessage) => ({
 })
 
 
+
 //THUNK
 
 // export const collectionsFetchingAsync = () => {
