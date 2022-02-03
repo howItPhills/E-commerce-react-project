@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import CollectionItem from '../../components/collection-item/CollectionItem.component';
-import { withSpinner } from '../../components/with-spinner/withSpinner.HOC';
-import { selectCollection } from '../../redux/shop/shop.selectors';
 
+import { selectCollection } from '../../redux/shop/shop.selectors';
+import { withSpinner } from '../../components/with-spinner/withSpinner.HOC';
+
+import CollectionItem from '../../components/collection-item/CollectionItem.component';
 
 import './collection-page.styles.scss'
 
@@ -11,6 +12,7 @@ const CollectionPage = () => {
 
    const { collectionId } = useParams();
    const collection = useSelector(selectCollection(collectionId))
+
    return (
       <div className='collection-page'>
          {collection ?

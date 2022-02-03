@@ -1,8 +1,10 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
+
 import { selectShopPageCollectionsArray } from '../../redux/shop/shop.selectors'
 import CollectionPreview from '../collection-preview/CollectionPreview.component'
+
 import { withSpinner } from '../with-spinner/withSpinner.HOC'
+
 import './collection-overview.styles.scss'
 
 

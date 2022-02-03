@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
-import CustomButton from '../custom-button/CustomButton.component';
-import FormInput from '../form-input/FormInput.component';
-import './sign-in.styles.scss';
-import { emailSignInStart, googleSignInStart } from '../../redux/user/user.actions';
+import { useState } from 'react'
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+
 import { selectIsInvalid } from '../../redux/user/user.selectors';
+
+import { emailSignInStart, googleSignInStart } from '../../redux/user/user.actions';
+
+import CustomButton from '../custom-button/CustomButton.component';
+import FormInput from '../form-input/FormInput.component';
+
+import './sign-in.styles.scss';
 
 const SignIn = ({ emailSignInStart, googleSignInStart, isInvalidEmailOrPassword }) => {
    const [userCredentials, setUserCredentials] = useState({

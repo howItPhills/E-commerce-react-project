@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import './sign-up.styles.scss';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { signUpStart } from '../../redux/user/user.actions';
 
 import CustomButton from '../custom-button/CustomButton.component';
 import FormInput from '../form-input/FormInput.component';
 
-
-import { connect } from 'react-redux';
-import { signUpStart } from '../../redux/user/user.actions';
+import './sign-up.styles.scss';
 
 
-const SignUp = ({ signUpStart }) => {
+
+const SignUp = () => {
    const [userCredentials, setUserCredentials] = useState({
       displayName: '',
       email: '',
       password: '',
       confirmPassword: '',
    })
+
+   const dispatch = useDispatch()
 
    const handleChange = event => {
       const { name, value } = event.target;
@@ -33,7 +36,7 @@ const SignUp = ({ signUpStart }) => {
          alert('Passwords dont match');
          return;
       }
-      signUpStart(displayName, email, password)
+      dispatch(signUpStart({ displayName, email, password }))
    }
 
    return (
@@ -79,8 +82,5 @@ const SignUp = ({ signUpStart }) => {
    )
 }
 
-const mapDispatchToProps = dispatch => ({
-   signUpStart: (displayName, email, password) => dispatch(signUpStart({ displayName, email, password }))
-})
 
-export default connect(null, mapDispatchToProps)(SignUp)
+export default SignUp

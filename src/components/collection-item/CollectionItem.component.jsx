@@ -1,16 +1,20 @@
-import React from 'react'
-import './collection-item.styles.scss'
-import CustomButton from '../custom-button/CustomButton.component'
-import { connect } from 'react-redux'
-import { addItem } from '../../redux/cart/cart.actions'
-import { compose } from 'redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createStructuredSelector } from 'reselect'
+import { addItem } from '../../redux/cart/cart.actions'
 import { selectCurrentUser } from '../../redux/user/user.selectors'
 
-const CollectionItem = ({ item, addItem, history, currentUser, ...otherProps }) => {
-   const { imageUrl, name, price } = item
+import CustomButton from '../custom-button/CustomButton.component'
+
+import './collection-item.styles.scss'
+
+const CollectionItem = ({ item }) => {
+
+   const currentUser = useSelector(selectCurrentUser)
+   const dispatch = useDispatch()
    const navigate = useNavigate();
+
+   const { imageUrl, name, price } = item
+
    return (
       <div className='collection-item' >
          <div
@@ -23,22 +27,10 @@ const CollectionItem = ({ item, addItem, history, currentUser, ...otherProps }) 
             <span className="item-price">${price}</span>
          </div>
          <CustomButton isInverted
-            onClick={() => currentUser ? addItem(item) : navigate('/signin')}
+            onClick={() => currentUser ? dispatch(addItem(item)) : navigate('/signin')}
          >add to cart</CustomButton>
       </div >
    )
 }
 
-
-const mapStateToProps = createStructuredSelector({
-   currentUser: selectCurrentUser
-})
-
-const mapDispatchToProps = dispatch => ({
-   addItem: item => dispatch(addItem(item))
-})
-
-
-export default compose(
-   connect(mapStateToProps, mapDispatchToProps),
-)(CollectionItem)
+export default CollectionItem

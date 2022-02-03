@@ -1,11 +1,13 @@
-import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+
 import { selectCartItems } from '../../redux/cart/cart.selectors'
 import { selectCartItemsTotal } from '../../redux/cart/cart.selectors'
-import './checkout.styles.scss';
+
 import CheckoutItem from '../../components/checkout-item/CheckoutItem.component'
 import StripeCheckoutButton from '../../components/stripe-checkout/StripeCheckout.component'
+
+import './checkout.styles.scss';
 
 const Checkout = ({ cartItems, total }) => (
    <div className='checkout-page'>
